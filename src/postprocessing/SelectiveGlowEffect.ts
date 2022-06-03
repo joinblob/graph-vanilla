@@ -7,7 +7,6 @@ import Selection from "./helpers/Selection";
 import SelectiveRenderHelpers from "./helpers/SelectiveRenderHelpers";
 
 class SelectiveGlowEffect extends GlowEffect {
-  private scene: THREE.Scene;
   private finalComposer: EffectComposer;
   private selectiveRenderHelpers: SelectiveRenderHelpers;
   constructor(
@@ -19,11 +18,10 @@ class SelectiveGlowEffect extends GlowEffect {
     props: GlowEffectProps
   ) {
     super(canvas, scene, camera, renderer, props);
-    this.scene = scene;
     this.selectiveRenderHelpers = new SelectiveRenderHelpers(selection);
     this.configEffectComposer();
     const shaderPass = this.createShaderPass();
-    this.finalComposer = this.createFinalComposer(shaderPass, renderer);
+    this.finalComposer = this.createFinalComposer(shaderPass);
   }
 
   private configEffectComposer(): void {
@@ -62,22 +60,33 @@ class SelectiveGlowEffect extends GlowEffect {
     return shaderPass;
   }
 
-  private createFinalComposer(
-    shaderPass: ShaderPass,
-    renderer: THREE.WebGLRenderer
-  ): EffectComposer {
-    const finalComposer = new EffectComposer(renderer);
+  private createFinalComposer(shaderPass: ShaderPass): EffectComposer {
+    const finalComposer = new EffectComposer(super.renderer);
     finalComposer.addPass(super.renderPass);
     finalComposer.addPass(shaderPass);
     return finalComposer;
   }
 
+  public onWindowResize(): void {
+    super.onWindowResize();
+    const { width, height } = super.canvas;
+    this.finalComposer.setSize(width, height);
+  }
+
   public render() {
-    this.scene.traverse(this.selectiveRenderHelpers.darkenNonBloomed);
+    super.scene.traverse(
+      this.selectiveRenderHelpers.darkenNonBloomed.bind(
+        this.selectiveRenderHelpers
+      )
+    );
     super.render();
-    this.scene.traverse(this.selectiveRenderHelpers.restoreMaterial);
+    super.scene.traverse(
+      this.selectiveRenderHelpers.restoreMaterial.bind(
+        this.selectiveRenderHelpers
+      )
+    );
     this.finalComposer.render();
   }
 }
 
-export default SelectiveRenderHelpers;
+export default SelectiveGlowEffect;

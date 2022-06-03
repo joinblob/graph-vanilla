@@ -5,12 +5,14 @@ import Node from "./components/Node";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import GlowEffect from "./postprocessing/GlowEffect";
 import Selection from "./postprocessing/helpers/Selection";
+import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 
 class SceneManager {
   private canvas: HTMLCanvasElement;
   private scene: THREE.Scene;
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
+  private components: Array<Component>;
   private animatedComponents: Array<AnimatedComponent>;
   private orbitControls: OrbitControls;
   private glowEffect: GlowEffect;
@@ -21,7 +23,7 @@ class SceneManager {
     this.renderer = this.initRenderer();
     this.camera = this.initCamera();
     this.orbitControls = this.initOrbitControls();
-    this.initComponents();
+    this.components = this.initComponents();
     this.animatedComponents = this.initAnimatedComponents();
     this.glowEffect = this.initEffects();
   }
@@ -41,7 +43,7 @@ class SceneManager {
   }
 
   private initCamera(): THREE.PerspectiveCamera {
-    const fieldOfView: number = 75;
+    const fieldOfView: number = 20;
     const aspectRatio: number = this.canvas.width / this.canvas.height;
     const near: number = 0.1;
     const far: number = 1000;
@@ -66,9 +68,14 @@ class SceneManager {
   private initComponents(): Array<Component> {
     const components: Array<Component> = [
       new Node(this.scene, {
-        radius: 2,
+        radius: 0.5,
         color: new THREE.Color("white"),
-        position: [0, 0, 0],
+        position: [-3, 0, 0],
+      }),
+      new Node(this.scene, {
+        radius: 0.5,
+        color: new THREE.Color("white"),
+        position: [3, 0, 0],
       }),
     ];
     return components;
@@ -80,11 +87,16 @@ class SceneManager {
   }
 
   private initEffects() {
-    const glowEffect: GlowEffect = new GlowEffect(
+    const selection: Selection = new Selection();
+    for (let component of this.components) {
+      selection.add(component.mesh);
+    }
+    const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(
       this.canvas,
       this.scene,
       this.camera,
       this.renderer,
+      selection,
       {
         threshold: 0,
         strength: 2,
@@ -110,6 +122,8 @@ class SceneManager {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
+
+    this.glowEffect.onWindowResize();
   }
 }
 

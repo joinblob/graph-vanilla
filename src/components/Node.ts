@@ -33,6 +33,10 @@ class Node extends Component {
     return node;
   }
 
+  public get mesh(): THREE.Mesh {
+    return this.node;
+  }
+
   public set position(position: [number, number, number]) {
     this.node.position.set(...position);
   }
