@@ -7,7 +7,7 @@ class Selection {
     this._layer = layer;
   }
 
-  public add(selection: THREE.Mesh): void {
+  public add(selection: THREE.Object3D): void {
     selection.layers.enable(this._layer);
   }
 

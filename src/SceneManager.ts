@@ -6,6 +6,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import GlowEffect from "./postprocessing/GlowEffect";
 import Selection from "./postprocessing/helpers/Selection";
 import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
+import Edge from "./components/Edge";
 
 class SceneManager {
   private canvas: HTMLCanvasElement;
@@ -62,6 +63,7 @@ class SceneManager {
       this.camera,
       this.renderer.domElement
     );
+    controls.enableDamping = true;
     return controls;
   }
 
@@ -77,6 +79,11 @@ class SceneManager {
         color: new THREE.Color("white"),
         position: [3, 0, 0],
       }),
+      new Edge(this.scene, {
+        start: [-3, 0, 0],
+        end: [3, 0, 0],
+        color: new THREE.Color("orange"),
+      }),
     ];
     return components;
   }
@@ -88,9 +95,12 @@ class SceneManager {
 
   private initEffects() {
     const selection: Selection = new Selection();
-    for (let component of this.components) {
-      selection.add(component.mesh);
-    }
+    // for (let component of this.components) {
+    //   selection.add(component.mesh);
+    // }
+    selection.add(this.components[0].mesh);
+    selection.add(this.components[1].mesh);
+    selection.add(this.components[2].mesh);
     const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(
       this.canvas,
       this.scene,
