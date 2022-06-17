@@ -9,12 +9,12 @@ import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 import Edge from "./components/Edge";
 
 class SceneManager {
-  private canvas: HTMLCanvasElement;
-  private scene: THREE.Scene;
-  private renderer: THREE.WebGLRenderer;
-  private camera: THREE.PerspectiveCamera;
-  private components: Array<Component>;
-  private animatedComponents: Array<AnimatedComponent>;
+  // private canvas: HTMLCanvasElement;
+  // private scene: THREE.Scene;
+  // private renderer: THREE.WebGLRenderer;
+  // private camera: THREE.PerspectiveCamera;
+  // private components: Array<Component>;
+  // private animatedComponents: Array<AnimatedComponent>;
   private orbitControls: OrbitControls;
   private glowEffect: GlowEffect;
 
