@@ -9,21 +9,21 @@ import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 import Edge from "./components/Edge";
 
 class SceneManager {
-  private canvas: HTMLCanvasElement;
-  private scene: THREE.Scene;
-  private renderer: THREE.WebGLRenderer;
-  private camera: THREE.PerspectiveCamera;
+  // private canvas: HTMLCanvasElement;
+  // private scene: THREE.Scene;
+  // private renderer: THREE.WebGLRenderer;
+  // private camera: THREE.PerspectiveCamera;
   private components: Array<Component>;
   private animatedComponents: Array<AnimatedComponent>;
-  private orbitControls: OrbitControls;
+  // private orbitControls: OrbitControls;
   private glowEffect: GlowEffect;
 
   constructor(canvas: HTMLCanvasElement) {
-    this.canvas = canvas;
-    this.scene = this.initScene();
-    this.renderer = this.initRenderer();
-    this.camera = this.initCamera();
-    this.orbitControls = this.initOrbitControls();
+    Graph.canvas = canvas;
+    Graph.scene = this.initScene();
+    Graph.renderer = this.initRenderer();
+    Graph.camera = this.initCamera();
+    Graph.orbitControls = this.initOrbitControls();
     this.components = this.initComponents();
     this.animatedComponents = this.initAnimatedComponents();
     this.glowEffect = this.initEffects();
@@ -36,16 +36,16 @@ class SceneManager {
 
   private initRenderer(): THREE.WebGLRenderer {
     const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
-      canvas: this.canvas,
+      canvas: Graph.canvas,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(this.canvas.width, this.canvas.height);
+    renderer.setSize(Graph.canvas.width, Graph.canvas.height);
     return renderer;
   }
 
   private initCamera(): THREE.PerspectiveCamera {
     const fieldOfView: number = 20;
-    const aspectRatio: number = this.canvas.width / this.canvas.height;
+    const aspectRatio: number = Graph.canvas.width / Graph.canvas.height;
     const near: number = 0.1;
     const far: number = 1000;
     const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
@@ -60,8 +60,8 @@ class SceneManager {
 
   private initOrbitControls(): OrbitControls {
     const controls: OrbitControls = new OrbitControls(
-      this.camera,
-      this.renderer.domElement
+      Graph.camera,
+      Graph.renderer.domElement
     );
     controls.enableDamping = true;
     return controls;
@@ -69,17 +69,17 @@ class SceneManager {
 
   private initComponents(): Array<Component> {
     const components: Array<Component> = [
-      new Node(this.scene, {
+      new Node({
         radius: 0.5,
         color: new THREE.Color("white"),
         position: [-3, 0, 0],
       }),
-      new Node(this.scene, {
+      new Node({
         radius: 0.5,
         color: new THREE.Color("white"),
         position: [3, 0, 0],
       }),
-      new Edge(this.scene, {
+      new Edge({
         start: [-3, 0, 0],
         end: [3, 0, 0],
         color: new THREE.Color("orange"),
@@ -101,18 +101,11 @@ class SceneManager {
     selection.add(this.components[0].mesh);
     selection.add(this.components[1].mesh);
     selection.add(this.components[2].mesh);
-    const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(
-      this.canvas,
-      this.scene,
-      this.camera,
-      this.renderer,
-      selection,
-      {
-        threshold: 0,
-        strength: 2,
-        radius: 0,
-      }
-    );
+    const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(selection, {
+      threshold: 0,
+      strength: 2,
+      radius: 0,
+    });
     return glowEffect;
   }
 
@@ -120,18 +113,18 @@ class SceneManager {
     for (let i = 0; i < this.animatedComponents.length; i++)
       this.animatedComponents[i].animate();
 
-    this.orbitControls.update();
+    Graph.orbitControls.update();
     // this.renderer.render(this.scene, this.camera);
     this.glowEffect.render();
   }
 
   public onWindowResize(): void {
-    const { width, height } = this.canvas;
+    const { width, height } = Graph.canvas;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    Graph.camera.aspect = width / height;
+    Graph.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(width, height);
+    Graph.renderer.setSize(width, height);
 
     this.glowEffect.onWindowResize();
   }

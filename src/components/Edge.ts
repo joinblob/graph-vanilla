@@ -8,13 +8,11 @@ type props = {
 };
 
 class Edge extends Component {
-  private scene: THREE.Scene;
   private props: props;
   private edge: THREE.Mesh;
 
-  constructor(scene: THREE.Scene, props: props) {
+  constructor(props: props) {
     super();
-    this.scene = scene;
     this.props = props;
     this.edge = this.build();
   }
@@ -49,7 +47,7 @@ class Edge extends Component {
       (start.z + end.z) / 2
     );
 
-    this.scene.add(line);
+    Graph.scene.add(line);
 
     return line;
   }

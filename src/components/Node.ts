@@ -8,13 +8,11 @@ type props = {
 };
 
 class Node extends Component {
-  private scene: THREE.Scene;
   private props: props;
   private node: THREE.Mesh;
 
-  constructor(scene: THREE.Scene, props: props) {
+  constructor(props: props) {
     super();
-    this.scene = scene;
     this.props = props;
     this.node = this.build();
   }
@@ -29,7 +27,7 @@ class Node extends Component {
     });
     const node: THREE.Mesh = new THREE.Mesh(geometry, material);
     node.position.set(...this.props.position);
-    this.scene.add(node);
+    Graph.scene.add(node);
     return node;
   }
 
