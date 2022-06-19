@@ -7,23 +7,19 @@ import GlowEffect from "./postprocessing/GlowEffect";
 import Selection from "./postprocessing/helpers/Selection";
 import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 import Edge from "./components/Edge";
+import ThreeState from "./ThreeState";
 
 class SceneManager {
-  // private canvas: HTMLCanvasElement;
-  // private scene: THREE.Scene;
-  // private renderer: THREE.WebGLRenderer;
-  // private camera: THREE.PerspectiveCamera;
   private components: Array<Component>;
   private animatedComponents: Array<AnimatedComponent>;
-  // private orbitControls: OrbitControls;
   private glowEffect: GlowEffect;
 
   constructor(canvas: HTMLCanvasElement) {
-    Graph.canvas = canvas;
-    Graph.scene = this.initScene();
-    Graph.renderer = this.initRenderer();
-    Graph.camera = this.initCamera();
-    Graph.orbitControls = this.initOrbitControls();
+    ThreeState.canvas = canvas;
+    ThreeState.scene = this.initScene();
+    ThreeState.renderer = this.initRenderer();
+    ThreeState.camera = this.initCamera();
+    ThreeState.orbitControls = this.initOrbitControls();
     this.components = this.initComponents();
     this.animatedComponents = this.initAnimatedComponents();
     this.glowEffect = this.initEffects();
@@ -36,16 +32,17 @@ class SceneManager {
 
   private initRenderer(): THREE.WebGLRenderer {
     const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
-      canvas: Graph.canvas,
+      canvas: ThreeState.canvas,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(Graph.canvas.width, Graph.canvas.height);
+    renderer.setSize(ThreeState.canvas.width, ThreeState.canvas.height);
     return renderer;
   }
 
   private initCamera(): THREE.PerspectiveCamera {
     const fieldOfView: number = 20;
-    const aspectRatio: number = Graph.canvas.width / Graph.canvas.height;
+    const aspectRatio: number =
+      ThreeState.canvas.width / ThreeState.canvas.height;
     const near: number = 0.1;
     const far: number = 1000;
     const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
@@ -60,8 +57,8 @@ class SceneManager {
 
   private initOrbitControls(): OrbitControls {
     const controls: OrbitControls = new OrbitControls(
-      Graph.camera,
-      Graph.renderer.domElement
+      ThreeState.camera,
+      ThreeState.renderer.domElement
     );
     controls.enableDamping = true;
     return controls;
@@ -70,11 +67,13 @@ class SceneManager {
   private initComponents(): Array<Component> {
     const components: Array<Component> = [
       new Node({
+        info: "",
         radius: 0.5,
         color: new THREE.Color("white"),
         position: [-3, 0, 0],
       }),
       new Node({
+        info: "",
         radius: 0.5,
         color: new THREE.Color("white"),
         position: [3, 0, 0],
@@ -113,18 +112,18 @@ class SceneManager {
     for (let i = 0; i < this.animatedComponents.length; i++)
       this.animatedComponents[i].animate();
 
-    Graph.orbitControls.update();
+    ThreeState.orbitControls.update();
     // this.renderer.render(this.scene, this.camera);
     this.glowEffect.render();
   }
 
   public onWindowResize(): void {
-    const { width, height } = Graph.canvas;
+    const { width, height } = ThreeState.canvas;
 
-    Graph.camera.aspect = width / height;
-    Graph.camera.updateProjectionMatrix();
+    ThreeState.camera.aspect = width / height;
+    ThreeState.camera.updateProjectionMatrix();
 
-    Graph.renderer.setSize(width, height);
+    ThreeState.renderer.setSize(width, height);
 
     this.glowEffect.onWindowResize();
   }

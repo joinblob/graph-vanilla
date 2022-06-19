@@ -3,16 +3,20 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import GlowEffectProps from "./types/GlowEffectProps";
+import ThreeState from "../ThreeState";
 
 class GlowEffect {
   private _renderPass: RenderPass;
   private _effectComposer: EffectComposer;
   constructor(props: GlowEffectProps) {
-    this._renderPass = this.createRenderPass(Graph.scene, Graph.camera);
-    const bloomPass = this.createBloomPass(Graph.canvas, props);
+    this._renderPass = this.createRenderPass(
+      ThreeState.scene,
+      ThreeState.camera
+    );
+    const bloomPass = this.createBloomPass(ThreeState.canvas, props);
     this._effectComposer = this.createEffectComposer(
-      Graph.canvas,
-      Graph.renderer,
+      ThreeState.canvas,
+      ThreeState.renderer,
       bloomPass
     );
   }
@@ -60,7 +64,7 @@ class GlowEffect {
   }
 
   public onWindowResize(): void {
-    const { width, height } = Graph.canvas;
+    const { width, height } = ThreeState.canvas;
     this._effectComposer.setSize(width, height);
   }
 

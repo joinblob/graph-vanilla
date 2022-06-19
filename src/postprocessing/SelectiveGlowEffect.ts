@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import Selection from "./helpers/Selection";
 import SelectiveRenderHelpers from "./helpers/SelectiveRenderHelpers";
+import ThreeState from "../ThreeState";
 
 class SelectiveGlowEffect extends GlowEffect {
   private finalComposer: EffectComposer;
@@ -54,7 +55,7 @@ class SelectiveGlowEffect extends GlowEffect {
   }
 
   private createFinalComposer(shaderPass: ShaderPass): EffectComposer {
-    const finalComposer = new EffectComposer(Graph.renderer);
+    const finalComposer = new EffectComposer(ThreeState.renderer);
     finalComposer.addPass(super.renderPass);
     finalComposer.addPass(shaderPass);
     return finalComposer;
@@ -62,18 +63,18 @@ class SelectiveGlowEffect extends GlowEffect {
 
   public onWindowResize(): void {
     super.onWindowResize();
-    const { width, height } = Graph.canvas;
+    const { width, height } = ThreeState.canvas;
     this.finalComposer.setSize(width, height);
   }
 
   public render() {
-    Graph.scene.traverse(
+    ThreeState.scene.traverse(
       this.selectiveRenderHelpers.darkenNonBloomed.bind(
         this.selectiveRenderHelpers
       )
     );
     super.render();
-    Graph.scene.traverse(
+    ThreeState.scene.traverse(
       this.selectiveRenderHelpers.restoreMaterial.bind(
         this.selectiveRenderHelpers
       )
