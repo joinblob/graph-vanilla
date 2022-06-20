@@ -7,9 +7,6 @@ class System {
   private node: Node;
   private startEdges: Array<Edge> = [];
   private endEdges: Array<Edge> = [];
-  // used for judging highlighting when dragging
-  private isHighlighted: boolean = false;
-  private isDragging: boolean = false;
 
   constructor(node: Node) {
     this.node = node;
@@ -28,28 +25,20 @@ class System {
     controls.addEventListener("hoveroff", this.hoveroffHandler.bind(this));
 
     controls.addEventListener("drag", this.dragHandler.bind(this));
-
-    controls.addEventListener("dragend", this.dragendHandler.bind(this));
   }
 
   private dragHandler(_: any): void {
-    this.isDragging = true;
     this.orientEdges(this.node.position);
   }
 
   private hoveronHandler(_: any): void {
     ThreeState.orbitControls.enabled = false;
-    if (!this.isDragging) this.highlight();
+    this.highlight();
   }
 
   private hoveroffHandler(_: any): void {
     ThreeState.orbitControls.enabled = true;
-    if (!this.isDragging) this.unHighlight();
-  }
-
-  private dragendHandler(_: any): void {
-    this.isDragging = false;
-    if (this.isHighlighted) this.unHighlight();
+    this.unHighlight();
   }
 
   public addStartEdge(edge: Edge): void {
@@ -74,14 +63,12 @@ class System {
     this.node.color = "yellow";
     for (let startEdge of this.startEdges) startEdge.color = "yellow";
     for (let endEdge of this.endEdges) endEdge.color = "yellow";
-    this.isHighlighted = true;
   }
 
   public unHighlight(): void {
     this.node.color = "white";
     for (let startEdge of this.startEdges) startEdge.color = "white";
     for (let endEdge of this.endEdges) endEdge.color = "white";
-    this.isHighlighted = false;
   }
 
   public get position(): [number, number, number] {
