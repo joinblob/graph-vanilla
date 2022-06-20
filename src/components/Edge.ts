@@ -63,6 +63,7 @@ class Edge extends Component {
   }
 
   public set start(position: [number, number, number]) {
+    this.props.start = position;
     const start: THREE.Vector3 = new THREE.Vector3(...position);
     const end: THREE.Vector3 = new THREE.Vector3(...this.props.end);
     const edgeVector: THREE.Vector3 = new THREE.Vector3().subVectors(
@@ -87,6 +88,7 @@ class Edge extends Component {
   }
 
   public set end(position: [number, number, number]) {
+    this.props.end = position;
     const start: THREE.Vector3 = new THREE.Vector3(...this.props.start);
     const end: THREE.Vector3 = new THREE.Vector3(...position);
     const edgeVector: THREE.Vector3 = new THREE.Vector3().subVectors(

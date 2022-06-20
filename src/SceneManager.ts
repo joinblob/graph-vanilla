@@ -8,11 +8,13 @@ import Selection from "./postprocessing/helpers/Selection";
 import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 import Edge from "./components/Edge";
 import ThreeState from "./ThreeState";
+import Graph from "./components/Graph";
+import graph from "./testData/graph";
 
 class SceneManager {
-  private components: Array<Component>;
-  private animatedComponents: Array<AnimatedComponent>;
-  private glowEffect: GlowEffect;
+  // private components: Array<Component>;
+  // private animatedComponents: Array<AnimatedComponent>;
+  // private glowEffect: GlowEffect;
 
   constructor(canvas: HTMLCanvasElement) {
     ThreeState.canvas = canvas;
@@ -20,9 +22,10 @@ class SceneManager {
     ThreeState.renderer = this.initRenderer();
     ThreeState.camera = this.initCamera();
     ThreeState.orbitControls = this.initOrbitControls();
-    this.components = this.initComponents();
-    this.animatedComponents = this.initAnimatedComponents();
-    this.glowEffect = this.initEffects();
+    // this.components = this.initComponents();
+    // this.animatedComponents = this.initAnimatedComponents();
+    // this.glowEffect = this.initEffects();
+    Graph.build(graph);
   }
 
   private initScene(): THREE.Scene {
@@ -92,29 +95,29 @@ class SceneManager {
     return animatedComponents;
   }
 
-  private initEffects() {
-    const selection: Selection = new Selection();
-    // for (let component of this.components) {
-    //   selection.add(component.mesh);
-    // }
-    selection.add(this.components[0].mesh);
-    selection.add(this.components[1].mesh);
-    selection.add(this.components[2].mesh);
-    const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(selection, {
-      threshold: 0,
-      strength: 2,
-      radius: 0,
-    });
-    return glowEffect;
-  }
+  // private initEffects() {
+  //   const selection: Selection = new Selection();
+  //   // for (let component of this.components) {
+  //   //   selection.add(component.mesh);
+  //   // }
+  //   selection.add(this.components[0].mesh);
+  //   selection.add(this.components[1].mesh);
+  //   selection.add(this.components[2].mesh);
+  //   const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(selection, {
+  //     threshold: 0,
+  //     strength: 2,
+  //     radius: 0,
+  //   });
+  //   return glowEffect;
+  // }
 
   public animate(): void {
-    for (let i = 0; i < this.animatedComponents.length; i++)
-      this.animatedComponents[i].animate();
+    // for (let i = 0; i < this.animatedComponents.length; i++)
+    //   this.animatedComponents[i].animate();
 
     ThreeState.orbitControls.update();
-    // this.renderer.render(this.scene, this.camera);
-    this.glowEffect.render();
+    ThreeState.renderer.render(ThreeState.scene, ThreeState.camera);
+    // this.glowEffect.render();
   }
 
   public onWindowResize(): void {
@@ -125,7 +128,7 @@ class SceneManager {
 
     ThreeState.renderer.setSize(width, height);
 
-    this.glowEffect.onWindowResize();
+    // this.glowEffect.onWindowResize();
   }
 }
 

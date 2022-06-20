@@ -13,7 +13,7 @@ class System {
 
   constructor(node: Node) {
     this.node = node;
-    this.setupControls;
+    this.setupControls();
   }
 
   private setupControls(): void {
