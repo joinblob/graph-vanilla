@@ -35,8 +35,8 @@ class Edge extends Component {
     const height: number = edgeVector.length();
 
     const geometry: THREE.CylinderGeometry = new THREE.CylinderGeometry(
-      0.05,
-      0.05,
+      0.01,
+      0.01,
       1,
       3
     );

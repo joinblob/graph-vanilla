@@ -60,9 +60,9 @@ class System {
   }
 
   public highlight(): void {
-    this.node.color = "yellow";
-    for (let startEdge of this.startEdges) startEdge.color = "yellow";
-    for (let endEdge of this.endEdges) endEdge.color = "yellow";
+    this.node.color = "orange";
+    for (let startEdge of this.startEdges) startEdge.color = "orange";
+    for (let endEdge of this.endEdges) endEdge.color = "orange";
   }
 
   public unHighlight(): void {
