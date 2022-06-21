@@ -1,6 +1,7 @@
 import Component from "./Component";
 import * as THREE from "three";
 import ThreeState from "../ThreeState";
+import EffectHelper from "../postprocessing/helpers/EffectHelper";
 
 type props = {
   start: [number, number, number];
@@ -58,6 +59,7 @@ class Edge extends Component {
     );
 
     ThreeState.scene.add(line);
+    EffectHelper.applyGlowEffect(line);
 
     return line;
   }

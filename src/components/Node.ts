@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Component from "./Component";
 import ThreeState from "../ThreeState";
+import EffectHelper from "../postprocessing/helpers/EffectHelper";
 
 type props = {
   info: String;
@@ -39,6 +40,7 @@ class Node extends Component {
     const node: THREE.Mesh = new THREE.Mesh(geometry, material);
     node.position.set(...this.props.position!);
     ThreeState.scene.add(node);
+    EffectHelper.applyGlowEffect(node);
     return node;
   }
 

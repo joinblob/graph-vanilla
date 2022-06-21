@@ -69,7 +69,7 @@ class GlowEffect {
   }
 
   public render() {
-    this.effectComposer.render();
+    this._effectComposer.render();
   }
 }
 
