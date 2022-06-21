@@ -9,9 +9,12 @@ import Graph from "./components/Graph";
 import graph from "./testData/graph";
 import EffectHelper from "./postprocessing/helpers/EffectHelper";
 import GlowEffect from "./postprocessing/GlowEffect";
+import Selections from "./postprocessing/helpers/Selection";
+import Selection from "./postprocessing/helpers/Selection";
+import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 
 class SceneManager {
-  // private components: Array<Component>;
+  private components: Array<Component>;
   // private animatedComponents: Array<AnimatedComponent>;
   private glowEffect: GlowEffect;
 
@@ -21,11 +24,11 @@ class SceneManager {
     ThreeState.renderer = this.initRenderer();
     ThreeState.camera = this.initCamera();
     ThreeState.orbitControls = this.initOrbitControls();
-    // this.components = this.initComponents();
+    this.components = this.initComponents();
     // this.animatedComponents = this.initAnimatedComponents();
     this.glowEffect = this.initEffects();
-    Graph.build(graph);
-    EffectHelper.buildGlowEffect();
+    // Graph.build(graph);
+    // EffectHelper.buildGlowEffect();
   }
 
   private initScene(): THREE.Scene {
@@ -67,15 +70,38 @@ class SceneManager {
     return controls;
   }
 
+  private initComponents(): Array<Component> {
+    const components: Array<Component> = [
+      new Node({
+        info: "",
+        radius: 0.5,
+        color: new THREE.Color("white"),
+        position: [-3, 0, 0],
+      }),
+      new Node({
+        info: "",
+        radius: 0.5,
+        color: new THREE.Color("white"),
+        position: [3, 0, 0],
+      }),
+      new Edge({
+        start: [-3, 0, 0],
+        end: [3, 0, 0],
+        color: new THREE.Color("orange"),
+      }),
+    ];
+    return components;
+  }
+
   private initEffects() {
-    // const selection: Selection = new Selection();
-    // // for (let component of this.components) {
-    // //   selection.add(component.mesh);
-    // // }
-    // selection.add(this.components[0].mesh);
-    // selection.add(this.components[1].mesh);
-    // selection.add(this.components[2].mesh);
-    const glowEffect: GlowEffect = new GlowEffect({
+    const selection: Selection = new Selection();
+    // for (let component of this.components) {
+    //   selection.add(component.mesh);
+    // }
+    selection.add(this.components[0].mesh);
+    selection.add(this.components[1].mesh);
+    selection.add(this.components[2].mesh);
+    const glowEffect: SelectiveGlowEffect = new SelectiveGlowEffect(selection, {
       threshold: 0,
       strength: 2,
       radius: 0,
