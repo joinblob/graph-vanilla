@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import Component from "./Component";
+import Component from "./core/Component";
 import ThreeState from "../ThreeState";
 import EffectHelper from "../postprocessing/helpers/EffectHelper";
 

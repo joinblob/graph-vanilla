@@ -1,13 +1,13 @@
 import SystemHelper from "./helpers/SystemHelper";
 
-class Graph {
+class GraphFactory {
   //   private graph: Array<Array<String>>;
 
   //   constructor(graph: Array<Array<String>>) {
   //     this.graph = graph;
   //   }
 
-  public static build(rawGraph: Array<Array<String>>): void {
+  public static buildGraph(rawGraph: Array<Array<String>>): void {
     for (let rawSystem of rawGraph) {
       SystemHelper.createSystem(rawSystem);
     }
@@ -48,4 +48,4 @@ class Graph {
   //   }
 }
 
-export default Graph;
+export default GraphFactory;

@@ -1,17 +1,9 @@
 import * as THREE from "three";
-import AnimatedComponent from "./components/AnimatedComponent";
-import Component from "./components/Component";
-import Node from "./components/Node";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import Edge from "./components/Edge";
 import ThreeState from "./ThreeState";
-import Graph from "./components/Graph";
-import graph from "./testData/graph";
+import GraphFactory from "./factories/GraphFactory";
+import graph from "../testData/graph";
 import EffectHelper from "./postprocessing/helpers/EffectHelper";
-import GlowEffect from "./postprocessing/GlowEffect";
-import Selections from "./postprocessing/helpers/Selection";
-import Selection from "./postprocessing/helpers/Selection";
-import SelectiveGlowEffect from "./postprocessing/SelectiveGlowEffect";
 
 class SceneManager {
   // private components: Array<Component>;
@@ -27,7 +19,7 @@ class SceneManager {
     // this.components = this.initComponents();
     // this.animatedComponents = this.initAnimatedComponents();
     // this.glowEffect = this.initEffects();
-    Graph.build(graph);
+    GraphFactory.buildGraph(graph);
     EffectHelper.buildGlowEffect();
   }
 
