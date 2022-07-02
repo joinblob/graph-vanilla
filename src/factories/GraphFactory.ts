@@ -1,4 +1,5 @@
 import SystemHelper from "./helpers/SystemHelper";
+import Graph from "../../testData/GraphType";
 
 class GraphFactory {
   //   private graph: Array<Array<String>>;
@@ -7,9 +8,11 @@ class GraphFactory {
   //     this.graph = graph;
   //   }
 
-  public static buildGraph(rawGraph: Array<Array<String>>): void {
-    for (let rawSystem of rawGraph) {
-      SystemHelper.createSystem(rawSystem);
+  public static buildGraph(rawGraph: Graph): void {
+    const nodes = rawGraph.nodes;
+    const graph = rawGraph.graph;
+    for (let rawSystem of graph) {
+      SystemHelper.createSystem(nodes, rawSystem);
     }
   }
 
