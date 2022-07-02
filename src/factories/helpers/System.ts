@@ -1,7 +1,7 @@
-import Edge from "./Edge";
-import Node from "./Node";
+import Edge from "../../components/Edge";
+import Node from "../../components/Node";
 import { DragControls } from "three/examples/jsm/controls/DragControls";
-import ThreeState from "../ThreeState";
+import ThreeState from "../../ThreeState";
 
 class System {
   private node: Node;

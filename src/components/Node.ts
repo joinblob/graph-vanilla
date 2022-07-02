@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Component from "./core/Component";
 import ThreeState from "../ThreeState";
 import EffectHelper from "../postprocessing/helpers/EffectHelper";
+import PointObject from "../physics/pointComponent";
 
 type props = {
   info: String;
@@ -13,6 +14,7 @@ type props = {
 class Node extends Component {
   private props: props;
   private node: THREE.Mesh;
+  private pointObject: PointObject;
 
   constructor(props: props) {
     const defaultPosition: [number, number, number] = [0, 0, 0];
@@ -27,6 +29,7 @@ class Node extends Component {
       ...props,
     };
     this.node = this.build();
+    this.pointObject = this.buildPointObject();
   }
 
   protected build(): THREE.Mesh {
@@ -65,6 +68,19 @@ class Node extends Component {
     this.node.material = new THREE.MeshBasicMaterial({
       color: color,
     });
+  }
+
+  /// Physics
+
+  private buildPointObject(): PointObject {
+    return new PointObject({
+      mesh: this.node,
+      mass: 10,
+    });
+  }
+
+  public applyForce(force: THREE.Vector3): void {
+    this.pointObject.applyForce(force);
   }
 }
 

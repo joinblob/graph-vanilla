@@ -1,6 +1,6 @@
-import Edge from "../Edge";
-import Node from "../Node";
-import System from "../System";
+import Edge from "../../components/Edge";
+import Node from "../../components/Node";
+import System from "./System";
 
 class SystemHelper {
   private static systems: Map<String, System> = new Map();
