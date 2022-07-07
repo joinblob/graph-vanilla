@@ -22,7 +22,7 @@ export default class Graph {
     }
     
     animate(): void {
-      requestAnimationFrame(() => this.animate(graph));
+      requestAnimationFrame(() => this.animate());
       this.sceneManager.animate();
     }
 }
