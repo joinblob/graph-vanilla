@@ -13,6 +13,8 @@
       import graph from "./testData/graph.ts";
 
       const forceGraph = new Graph(document.querySelector("#graph"), graph);
+
+      forceGraph.on("hoveron", () => console.log("hoveron"));
     </script>
   </body>
 </html>

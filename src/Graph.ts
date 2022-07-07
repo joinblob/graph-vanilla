@@ -3,6 +3,8 @@ import SceneManager from "./SceneManager";
 import GraphDataType from "../testData/GraphDataType";
 import GraphFactory from "./factories/GraphFactory";
 import EffectHelper from "./postprocessing/helpers/EffectHelper";
+import emitter from "./factories/GraphEvents";
+import Node from "./components/Node";
 
 class Graph {
   canvas: HTMLCanvasElement;
@@ -15,6 +17,10 @@ class Graph {
     EffectHelper.buildGlowEffect();
     this.bindEventListeners();
     this.animate();
+  }
+
+  public on(event: string | number, callback: Function): void {
+    emitter.on(event, (node: Node) => callback(node));
   }
 
   private bindEventListeners(): void {

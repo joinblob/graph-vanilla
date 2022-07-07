@@ -2,6 +2,7 @@ import Edge from "../../components/Edge";
 import Node from "../../components/Node";
 import { DragControls } from "three/examples/jsm/controls/DragControls";
 import ThreeState from "../../ThreeState";
+import emitter from "../GraphEvents";
 
 class System {
   private node: Node;
@@ -29,16 +30,19 @@ class System {
 
   private dragHandler(_: any): void {
     this.orientEdges(this.node.position);
+    emitter.emit("drag", this.node);
   }
 
   private hoveronHandler(_: any): void {
     ThreeState.orbitControls.enabled = false;
     this.highlight();
+    emitter.emit("hoveron", this.node);
   }
 
   private hoveroffHandler(_: any): void {
     ThreeState.orbitControls.enabled = true;
     this.unHighlight();
+    emitter.emit("hoveronoff", this.node);
   }
 
   public addStartEdge(edge: Edge): void {
