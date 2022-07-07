@@ -3,7 +3,6 @@ import Node from "../../components/Node";
 import System from "./System";
 
 class SystemHelper {
-  // private static systems: Map<String, System> = new Map();
   private static systems: Array<System>;
   // only required without physics
   private static x: number = 0;
