@@ -1,5 +1,5 @@
 import SystemHelper from "./helpers/SystemHelper";
-import Graph from "../../testData/GraphType";
+import Graph from "../../testData/GraphDataType";
 
 class GraphFactory {
   //   private graph: Array<Array<String>>;
