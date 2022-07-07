@@ -1,9 +1,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import ThreeState from "./ThreeState";
-import GraphFactory from "./factories/GraphFactory";
-import graph from "../testData/graph";
-import EffectHelper from "./postprocessing/helpers/EffectHelper";
+// import GraphFactory from "./factories/GraphFactory";
+// import graph from "../testData/graph";
+// import EffectHelper from "./postprocessing/helpers/EffectHelper";
 
 class SceneManager {
   // private components: Array<Component>;
@@ -19,8 +19,8 @@ class SceneManager {
     // this.components = this.initComponents();
     // this.animatedComponents = this.initAnimatedComponents();
     // this.glowEffect = this.initEffects();
-    GraphFactory.buildGraph(graph);
-    EffectHelper.buildGlowEffect();
+    // GraphFactory.buildGraph(graph);
+    // EffectHelper.buildGlowEffect();
   }
 
   private initScene(): THREE.Scene {
@@ -108,7 +108,11 @@ class SceneManager {
     ThreeState.orbitControls.update();
     // ThreeState.renderer.render(ThreeState.scene, ThreeState.camera);
     // this.glowEffect.render();
-    EffectHelper.render();
+    // EffectHelper.render();
+  }
+
+  public render(): void {
+    ThreeState.renderer.render(ThreeState.scene, ThreeState.camera);
   }
 
   public onWindowResize(): void {
@@ -120,7 +124,7 @@ class SceneManager {
     ThreeState.renderer.setSize(width, height);
 
     // this.glowEffect.onWindowResize();
-    EffectHelper.onWindowResize();
+    // EffectHelper.onWindowResize();
   }
 }
 

@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <canvas id="graph"></canvas>
     <script type="module">
-        import Graph from "./src/index.ts"
+      import Graph from "./src/Graph.ts";
+      import graph from "./testData/graph.ts";
 
-        const graph = new Graph(document.querySelector("#graph"));
-        window.onresize = () => graph.resizeCanvas();
-        graph.animate();
+      const forceGraph = new Graph(document.querySelector("#graph"), graph);
     </script>
-</body>
-
+  </body>
 </html>
