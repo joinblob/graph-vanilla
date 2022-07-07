@@ -6,7 +6,7 @@
 //   ["v", "p", "t"],
 // ];
 
-import Graph from "./GraphType";
+import Graph from "./GraphDataType";
 
 const graph: Graph = {
   nodes: ["p", "t", "s", "u", "v"], // 0, 1, 2, 3, 4
