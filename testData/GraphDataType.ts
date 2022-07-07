@@ -1,6 +1,6 @@
-type Graph = {
+type GraphData = {
   nodes: Array<any>;
   graph: Array<Array<number>>;
 };
 
-export default Graph;
+export default GraphData;
