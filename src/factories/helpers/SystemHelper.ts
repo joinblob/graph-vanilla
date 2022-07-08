@@ -3,7 +3,7 @@ import Node from "../../components/Node";
 import System from "./System";
 
 class SystemHelper {
-  private static systems: Array<System>;
+  public static systems: Array<System>;
   // only required without physics
   private static x: number = 0;
 

@@ -3,13 +3,15 @@ import Node from "../../components/Node";
 import { DragControls } from "three/examples/jsm/controls/DragControls";
 import ThreeState from "../../ThreeState";
 import emitter from "../GraphEvents";
+import PointObject from "../../physics/PointObject";
 
-class System {
+class System extends PointObject {
   private node: Node;
   private startEdges: Array<Edge> = [];
   private endEdges: Array<Edge> = [];
 
   constructor(node: Node) {
+    super();
     this.node = node;
     this.setupControls();
   }
@@ -77,6 +79,11 @@ class System {
 
   public get position(): [number, number, number] {
     return this.node.position;
+  }
+
+  // physics
+  public updatePosition(x: number, y: number, z: number): void {
+    this.position = [x, y, z];
   }
 }
 
