@@ -12,7 +12,7 @@ class PhysicsEngine {
     this.pointObjects = nodes;
     this.initSimulation(nodes);
     this.initLinks(nodes, graph);
-    this, this.initRepulsion();
+    this.initRepulsion();
     this.initCentering();
   }
 
@@ -28,11 +28,11 @@ class PhysicsEngine {
   }
 
   private static initRepulsion(): void {
-    this.simulation.force("charge", d3.forceManyBody());
+    this.simulation.force("charge", d3.forceManyBody().strength(-1));
   }
 
   private static initCentering(): void {
-    this.simulation.force("center", d3.forceCenter());
+    this.simulation.force("center", d3.forceCenter().strength(0.52));
   }
 
   private static initSimulation(nodes: Array<PointObject>): void {
@@ -48,7 +48,10 @@ class PhysicsEngine {
     for (let i = 1; i < graph.length; i++) {
       links.concat(this.createLinksFromRaw(nodes, graph[i]));
     }
-    this.simulation.force("link", d3.forceLink(links));
+    this.simulation.force(
+      "link",
+      d3.forceLink(links).distance(1).strength(0.1)
+    );
   }
 
   private static createLinksFromRaw(

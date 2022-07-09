@@ -19,4 +19,9 @@ const graph: Graph = {
   ],
 };
 
+// const graph: Graph = {
+//   nodes: ["p", "t"], // 0, 1
+//   graph: [[0, 1]],
+// };
+
 export default graph;
