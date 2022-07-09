@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-</head>
+  </head>
 
-<body>
-    <canvas id="graph"></canvas>
-    <script type="module">
+  <body>
+    <div id="graph"></div>
+    <!-- <script type="module">
         import Graph from "./src/index.ts"
 
         const graph = new Graph(document.querySelector("#graph"));
         window.onresize = () => graph.resizeCanvas();
         graph.animate();
-    </script>
-</body>
-
+    </script> -->
+    <script type="module" src="/src/Graph.ts"></script>
+  </body>
 </html>
