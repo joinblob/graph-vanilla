@@ -4,7 +4,7 @@ import Node from "./components/Node";
 import * as THREE from "three";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
-const N: number = 400;
+const N: number = 2;
 const gData = {
   nodes: [...Array(N).keys()].map((i) => ({ id: i })),
   links: [...Array(N).keys()]
@@ -21,6 +21,8 @@ const Graph = ForceGraph3D({ controlType: "orbit" })(
 
 Graph.showNavInfo(false).backgroundColor("#000000");
 
+(Graph.controls() as any).enableDamping = true;
+
 Graph.nodeThreeObject(
   (_) =>
     new Node({
@@ -29,6 +31,8 @@ Graph.nodeThreeObject(
       position: [0, 0, 0],
     }).mesh
 );
+
+console.log(Graph.d3Force("link")!.distance(100));
 
 Graph.d3Force("center")!.strength(0.05);
 
