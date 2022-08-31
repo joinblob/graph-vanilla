@@ -5,19 +5,13 @@ import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import Selection from "./helpers/Selection";
 import SelectiveRenderHelpers from "./helpers/SelectiveRenderHelpers";
+import ThreeState from "../ThreeState";
 
 class SelectiveGlowEffect extends GlowEffect {
   private finalComposer: EffectComposer;
   private selectiveRenderHelpers: SelectiveRenderHelpers;
-  constructor(
-    canvas: HTMLCanvasElement,
-    scene: THREE.Scene,
-    camera: THREE.PerspectiveCamera,
-    renderer: THREE.WebGLRenderer,
-    selection: Selection,
-    props: GlowEffectProps
-  ) {
-    super(canvas, scene, camera, renderer, props);
+  constructor(selection: Selection, props: GlowEffectProps) {
+    super(props);
     this.selectiveRenderHelpers = new SelectiveRenderHelpers(selection);
     this.configEffectComposer();
     const shaderPass = this.createShaderPass();
@@ -61,7 +55,7 @@ class SelectiveGlowEffect extends GlowEffect {
   }
 
   private createFinalComposer(shaderPass: ShaderPass): EffectComposer {
-    const finalComposer = new EffectComposer(super.renderer);
+    const finalComposer = new EffectComposer(ThreeState.renderer);
     finalComposer.addPass(super.renderPass);
     finalComposer.addPass(shaderPass);
     return finalComposer;
@@ -69,18 +63,18 @@ class SelectiveGlowEffect extends GlowEffect {
 
   public onWindowResize(): void {
     super.onWindowResize();
-    const { width, height } = super.canvas;
+    const { width, height } = ThreeState.canvas;
     this.finalComposer.setSize(width, height);
   }
 
   public render() {
-    super.scene.traverse(
+    ThreeState.scene.traverse(
       this.selectiveRenderHelpers.darkenNonBloomed.bind(
         this.selectiveRenderHelpers
       )
     );
     super.render();
-    super.scene.traverse(
+    ThreeState.scene.traverse(
       this.selectiveRenderHelpers.restoreMaterial.bind(
         this.selectiveRenderHelpers
       )
