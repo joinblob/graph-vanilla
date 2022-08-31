@@ -4,7 +4,7 @@ import Node from "./components/Node";
 import * as THREE from "three";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
-const N: number = 2;
+const N: number = 400;
 const gData = {
   nodes: [...Array(N).keys()].map((i) => ({ id: i })),
   links: [...Array(N).keys()]
@@ -19,7 +19,7 @@ const Graph = ForceGraph3D({ controlType: "orbit" })(
   document.getElementById("graph")!
 ).graphData(gData);
 
-Graph.showNavInfo(false).backgroundColor("#000000");
+Graph.showNavInfo(false).backgroundColor("#151B1D");
 
 (Graph.controls() as any).enableDamping = true;
 
@@ -64,6 +64,6 @@ const bloomPass: UnrealBloomPass = new UnrealBloomPass(
 // bloomPass.strength = 3;
 // bloomPass.radius = 1;
 // bloomPass.threshold = 0.1;
-Graph.postProcessingComposer().addPass(bloomPass);
+// Graph.postProcessingComposer().addPass(bloomPass);
 
-Graph.postProcessingComposer();
+// Graph.postProcessingComposer();
