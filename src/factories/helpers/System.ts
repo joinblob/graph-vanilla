@@ -28,11 +28,17 @@ class System extends PointObject {
     controls.addEventListener("hoveroff", this.hoveroffHandler.bind(this));
 
     controls.addEventListener("drag", this.dragHandler.bind(this));
+
+    controls.addEventListener("dragEnd", this.dragEndHandler.bind(this));
   }
 
   private dragHandler(_: any): void {
     this.orientEdges(this.node.position);
     emitter.emit("drag", this.node);
+  }
+
+  private dragEndHandler(_: any): void {
+    emitter.emit("dragEnd", this.node);
   }
 
   private hoveronHandler(_: any): void {

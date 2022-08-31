@@ -1,5 +1,6 @@
 import PointObject from "./PointObject";
 import * as d3 from "d3-force-3d";
+import emitter from "../factories/GraphEvents";
 
 class PhysicsEngine {
   private static simulation: any;
@@ -14,6 +15,7 @@ class PhysicsEngine {
     this.initLinks(nodes, graph);
     this.initRepulsion();
     this.initCentering();
+    this.initDragging();
   }
 
   public static step(): void {
@@ -33,6 +35,17 @@ class PhysicsEngine {
 
   private static initCentering(): void {
     this.simulation.force("center", d3.forceCenter().strength(0.52));
+  }
+
+  private static initDragging(): void {
+    emitter.on("drag", (_) => {
+      console.log("dragging");
+      // this.simulation.alphaTarget(0.3);
+    });
+
+    emitter.on("dragEnd", (_) => {
+      // this.simulation.alphaTarget(0);
+    });
   }
 
   private static initSimulation(nodes: Array<PointObject>): void {
