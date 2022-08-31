@@ -22,7 +22,7 @@ class Graph {
     this.animate();
   }
 
-  public on(event: string | number, callback: Function): void {
+  public on(event: string | symbol, callback: Function): void {
     emitter.on(event, (node: Node) => callback(node));
   }
 
