@@ -5,6 +5,8 @@ import GraphFactory from "./factories/GraphFactory";
 import EffectHelper from "./postprocessing/helpers/EffectHelper";
 import emitter from "./factories/GraphEvents";
 import Node from "./components/Node";
+import System from "./factories/helpers/System";
+import PhysicsEngine from "./physics/PhysicsEngine";
 
 class Graph {
   canvas: HTMLCanvasElement;
@@ -13,13 +15,14 @@ class Graph {
   constructor(canvas: HTMLCanvasElement, graph: GraphDataType) {
     this.canvas = canvas;
     this.sceneManager = new SceneManager(this.canvas);
-    GraphFactory.buildGraph(graph);
+    const systems: Array<System> = GraphFactory.buildGraph(graph);
+    PhysicsEngine.init(systems, graph.graph);
     EffectHelper.buildGlowEffect();
     this.bindEventListeners();
     this.animate();
   }
 
-  public on(event: string | number, callback: Function): void {
+  public on(event: string | symbol, callback: Function): void {
     emitter.on(event, (node: Node) => callback(node));
   }
 
@@ -42,6 +45,7 @@ class Graph {
   private animate(): void {
     requestAnimationFrame(() => this.animate());
     this.sceneManager.animate();
+    PhysicsEngine.step();
     EffectHelper.render();
   }
 }

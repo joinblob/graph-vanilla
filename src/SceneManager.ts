@@ -19,6 +19,7 @@ class SceneManager {
   private initRenderer(): THREE.WebGLRenderer {
     const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
       canvas: ThreeState.canvas,
+      antialias: true,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(ThreeState.canvas.width, ThreeState.canvas.height);
@@ -37,7 +38,8 @@ class SceneManager {
       near,
       far
     );
-    camera.position.setZ(30);
+    // camera.position.setZ(30);
+    camera.position.setZ(150);
     return camera;
   }
 

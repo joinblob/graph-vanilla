@@ -8,12 +8,17 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/events": "^3.0.0",
+    "@types/node": "12",
     "@types/three": "^0.140.0",
     "typescript": "^4.5.4",
     "vite": "^2.9.9"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@types/events": "^3.0.0",
+=======
+>>>>>>> 24ccc30b09e5e2156302a2d31aa433cced610859
     "d3-force-3d": "^3.0.3",
     "events": "^3.3.0",
     "three": "^0.141.0"
